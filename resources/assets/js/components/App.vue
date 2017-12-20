@@ -10,39 +10,50 @@
         <!-- Level with breadcrumbs and settings -->
             <div class="container">
                 <div class="level">
-                    <nav class="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
+                    <nav class="breadcrumb has-arrow-separator level-left" style="margin-bottom:0" aria-label="breadcrumbs">
                       <ul>
                         <li><a href="/app/sources">Home</a></li>
-                        <li class="is-active"><a href="#">{{posts_description}}</a></li>
+                        <li class="is-active">&nbsp;
+                            <span v-if="posts_description == 'All Posts'">
+                            {{posts_description}}
+                            </span>
+                            <span v-else class="tag" >
+                                {{posts_description}} &nbsp; 
+                                <button class="delete is-small" @click="showallposts()"></button>
+                            </span>
+
+                        </li>
                       </ul>
                     </nav>
                     <form>
-                        <label class="ios7-switch">
-                            <input
-                              type="checkbox"
-                              v-model="unread_only"
-                              true-value="true"
-                              false-value="false"
-                            >
-                            <span></span>
-                            Unread Only <span v-if="unread_count>0">({{unread_count}})</span>
-                            &nbsp;&nbsp;
-                        </label>
-                         <label class="ios7-switch">
-                            <input
-                              type="checkbox"
-                              v-model="oldest_on_top"
-                              true-value="true"
-                              false-value="false"
-                            >
-                            <span></span>
-                            Oldest On Top
-                        </label>                           
+                        <div class="level-right">
+                            <label class="ios7-switch">
+                                <input
+                                  type="checkbox"
+                                  v-model="unread_only"
+                                  true-value="true"
+                                  false-value="false"
+                                >
+                                <span></span>
+                                Unread Only <span v-if="unread_count>0">({{unread_count}})</span>
+                                &nbsp;&nbsp;
+                            </label>
+                             <label class="ios7-switch">
+                                <input
+                                  type="checkbox"
+                                  v-model="oldest_on_top"
+                                  true-value="true"
+                                  false-value="false"
+                                >
+                                <span></span>
+                                Oldest On Top
+                            </label>
+                        </div>
                     </form>
                 </div>
                 <div class="level" v-if="unread_count > 0">
                     <div class="level-left">
-                        <!-- Nothing here -->
+                        
                     </div>
                     <div class="level-right buttons">
                         <button class="button" v-show="!areyousure" @click="toggleAreYouSure()">Mark All Posts as Read</button>
@@ -140,6 +151,10 @@
                     return posts_list.reverse();
                 }
                 return posts_list;
+            },
+            showallposts()
+            {
+                window.location = "/";
             }
         },
         methods: {
